@@ -19,8 +19,10 @@
     <PrivateAssets>all</PrivateAssets>
     <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
   </PackageReference>
+  <PackageReference Include="Microsoft.CodeAnalysis" Version="4.7.0" />
   <PackageReference Include="MySqlConnector" Version="2.2.7" />
   <PackageReference Include="Salaros.ConfigParser" Version="0.3.8" />
+  <PackageReference Include="System.CodeDom" Version="7.0.0" />
     <PackageReference Include="YamlDotNet" Version="13.2.0" />
   </ItemGroup>
 </Project>

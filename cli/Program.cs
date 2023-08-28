@@ -26,10 +26,12 @@ namespace KosmaPanel
         public static Database db = new Database();
         public static Migrate mg = new Migrate();
         public static RemoveTrailingDots rmt = new RemoveTrailingDots();
+        public static PluginLoader pl = new PluginLoader();
         public static void Main(string[] args)
         {
             Console.Clear();
             Console.WriteLine(ascii);
+            pl.LoadPlugins();
             if (skiposcheck == false)
             {
                 if (!System.OperatingSystem.IsLinux())

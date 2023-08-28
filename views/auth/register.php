@@ -206,14 +206,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <!-- Logo -->
                         <div class="app-brand justify-content-center mb-4 mt-2">
                             <a href="/" class="app-brand-link gap-2">
-                                <span class="app-brand-text demo text-body fw-bold ms-1"><?= $name?></span>
+                                <span class="app-brand-text demo text-body fw-bold"><?= $name?></span>
                             </a>
                         </div>
                         <!-- /Logo -->
                         <h4 class="mb-1 pt-2 text-center">Adventure starts here 🚀</h4>
                         <p class="mb-4 text-center">Start creating an account and enjoy the power of web hosting.</p>
-
+                        <?php
+                                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                                    if (isset($_GET['e'])) {
+                                        ?>
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <?= $_GET['e'] ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <?php
+                                    }
+                                }   
+                                ?>
+                        <?php
+                                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                                    if (isset($_GET['s'])) {
+                                        ?>
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <?= $_GET['s'] ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <?php
+                                    }
+                                }
+                                ?>
                         <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+                            <div class="mb-3">
+                                <label for="first_name" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name"
+                                    placeholder="Enter your first name" autofocus />
+                            </div>
+                            <div class="mb-3">
+                                <label for="last_name" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name"
+                                    placeholder="Enter your last name" autofocus />
+                            </div>
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
                                 <input type="text" class="form-control" id="username" name="username"
@@ -253,30 +286,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span>Sign in instead</span>
                             </a>
                         </p>
-                        <?php
-                                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                                    if (isset($e)) {
-                                        ?>
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <?= $e ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <?php
-                                    }
-                                }   
-                                ?>
-                        <?php
-                                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                                    if (isset($s)) {
-                                        ?>
-                        <div class="alert alert-success alert-dismissible" role="alert">
-                            <?= $s ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <?php
-                                    }
-                                }
-                                ?>
                     </div>
                 </div>
                 <!-- Register Card -->
