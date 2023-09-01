@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -6,9 +7,9 @@ namespace KosmaPanel
 {
     public class PluginInfo
     {
-        public string Name { get; set; }
-        public string Version { get; set; }
-        public string Author { get; set; }
+        public required string Name { get; set; }
+        public required string Version { get; set; }
+        public required string Author { get; set; }
     }
     public enum PluginLogType
     {
@@ -86,6 +87,8 @@ namespace KosmaPanel
                 Program.logger.Log(LogType.Error, $"An error occurred: {e.Message}");
             }
         }
+
+        [RequiresAssemblyFiles()]
         public void LoadPlugins()
         {
             CheckAndCreatePluginFolder();
@@ -125,7 +128,7 @@ namespace KosmaPanel
                     {
                         ms.Seek(0, SeekOrigin.Begin);
                         Assembly compiledAssembly = Assembly.Load(ms.ToArray());
-
+                        #pragma warning disable
                         Action<string> logCallback = (message) => Program.logger.Log(LogType.Info, message);
                         Type pluginType = compiledAssembly.GetType("KosmaPanelPlugin.PluginInit");
                         object pluginInstance = Activator.CreateInstance(pluginType, logCallback);
@@ -136,6 +139,7 @@ namespace KosmaPanel
 
                         PluginInfo pluginInfo = GetPluginInfo(pluginInstance);
                         Program.logger.Log(LogType.Info, $"Loaded plugin: {pluginInfo.Name} (Version: {pluginInfo.Version}, Author: {pluginInfo.Author})");
+                        #pragma warning restore
                     }
                 }
             }
@@ -143,7 +147,7 @@ namespace KosmaPanel
         private PluginInfo GetPluginInfo(object pluginInstance)
         {
             Type pluginType = pluginInstance.GetType();
-
+            #pragma warning disable
             PropertyInfo nameProperty = pluginType.GetProperty("Name");
             PropertyInfo versionProperty = pluginType.GetProperty("Version");
             PropertyInfo authorProperty = pluginType.GetProperty("Author");
@@ -154,7 +158,7 @@ namespace KosmaPanel
                 Version = versionProperty?.GetValue(pluginInstance)?.ToString(),
                 Author = authorProperty?.GetValue(pluginInstance)?.ToString()
             };
-
+            #pragma warning restore
             return pluginInfo;
         }
     }

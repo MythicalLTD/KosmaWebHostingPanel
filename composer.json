@@ -27,7 +27,8 @@
     "require": {
         "php": ">=7.0.0",
         "symfony/yaml": "^6.3",
-        "mythicalsystems/php-router": "^1.0"
+        "mythicalsystems/php-router": "^1.0",
+        "phpmailer/phpmailer": "^6.8"
     },
     "autoload": {
         "psr-4": {

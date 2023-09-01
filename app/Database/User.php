@@ -3,73 +3,70 @@
 namespace Kosma\Database;
 
 use Kosma\Database\Connect;
-use Kosma\Encryption;
+
 
 use Symfony\Component\Yaml\Yaml;
 
 $KosmaConfig = Yaml::parseFile('../config.yml');
 $KosmaDB = $KosmaConfig['app'];
 $ekey = $KosmaDB['encryptionkey'];
+use Kosma\Encryption;
 
 $encryption = new Encryption();
 
 
-class User {
+class User
+{
     private $db;
+    private $encryption; // Added private property for Encryption class instance
 
-    public function __construct() {
+    public function __construct()
+    {
         $connect = new Connect();
         $this->db = $connect->connectToDatabase();
+        $this->encryption = new Encryption(); // Initialize Encryption instance
     }
 
-    public function createUser($username, $email, $first_name, $last_name, $password, $u_token, $first_ip, $last_ip, $verification_code, $encryption, $ekey) {
-
+    public function createUser($username, $email, $first_name, $last_name, $password, $u_token, $first_ip, $last_ip, $verification_code, $ekey)
+    {
         $query = "INSERT INTO users (username, email, first_name, last_name, password, usertoken, first_ip, last_ip, verification_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $encryptedUsername = $encryption->encrypt($username, $ekey);
-        $encryptedFirstName = $encryption->encrypt($first_name, $ekey);
-        $encryptedLastName = $encryption->encrypt($last_name, $ekey);
-        $encryptedIpAddress = $encryption->encrypt($first_ip, $ekey);
+        $encryptedUsername = $this->encryption->encrypt($username, $ekey);
+        $encryptedFirstName = $this->encryption->encrypt($first_name, $ekey);
+        $encryptedLastName = $this->encryption->encrypt($last_name, $ekey);
+        $encryptedIpAddress = $this->encryption->encrypt($first_ip, $ekey);
         $stmt->bind_param(
-            "sssssssss", 
+            "sssssssss",
             $encryptedUsername,
-            $email, 
+            $email,
             $encryptedFirstName,
             $encryptedLastName,
-            $password, 
-            $u_token, 
+            $password,
+            $u_token,
             $encryptedIpAddress,
             $encryptedIpAddress,
-            $code
+            $verification_code
         );
         return $stmt->execute();
     }
 
-    
-    public function getUser($username) {
-        $query = "SELECT * FROM users WHERE username = ?";
+    public function resetPassword($email, $userkey, $resetcode, $ipv4)
+    {
+        $query = "INSERT INTO `resetpasswords` (`email`, `user-apikey`, `user-resetkeycode`, `ip_addres`) VALUES (?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows > 0) {
-            return $result->fetch_assoc();
-        } else {
-            return null;
-        }
-    }
-
-    public function deleteUser($email, $u_token) {
-        $query = "DELETE FROM users WHERE email = ? AND usertoken = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param("ss", $email, $u_token);
-
+        $stmt->bind_param(
+            "ssss",
+            $email,
+            $userkey,
+            $resetcode,
+            $ipv4,
+        );
         return $stmt->execute();
     }
 
-    public function __destruct() {
+
+    public function __destruct()
+    {
         $this->db->close();
     }
 }

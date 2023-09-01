@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
 <link rel="stylesheet" href="/assets/vendor/libs/bs-stepper/bs-stepper.css" />
 <link rel="stylesheet" href="/assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
+<meta name="author" content="MythicalSystems">
 <link rel="stylesheet" href="/assets/vendor/libs/select2/select2.css" />
 <script src="/assets/vendor/js/helpers.js"></script>
 <script src="/assets/vendor/js/template-customizer.js"></script>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using YamlDotNet.Serialization;
 
 namespace KosmaPanel
@@ -27,6 +28,8 @@ namespace KosmaPanel
         public static Migrate mg = new Migrate();
         public static RemoveTrailingDots rmt = new RemoveTrailingDots();
         public static PluginLoader pl = new PluginLoader();
+
+        [RequiresAssemblyFiles()]
         public static void Main(string[] args)
         {
             Console.Clear();

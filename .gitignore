@@ -9,3 +9,5 @@ config.yml
 /logs/
 /cli/migrate/
 migrates.ini
+/plugins/
+/cli/plugins/
