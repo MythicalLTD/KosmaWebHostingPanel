@@ -1,3 +1,6 @@
 <?php 
-//TODO: Reddirect to /dash if user is logged in
+use Kosma\User\SessionManager;
+
+$sessionManager = new SessionManager();
+$sessionManager->authenticateUser();
 ?>
