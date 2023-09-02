@@ -3,7 +3,7 @@
 namespace Kosma\User;
 
 
-use Kosma\Database\Connect; 
+use Kosma\Database\Connect;
 
 class SessionManager
 {
@@ -33,6 +33,21 @@ class SessionManager
             }
         } else {
             $this->redirectToLogin($this->getFullUrl());
+        }
+    }
+
+    public function getUserInfo($info)
+    {
+        $session_id = $_COOKIE["token"];
+        $safeInfo = $this->dbConnection->real_escape_string($info);
+        $query = "SELECT `$safeInfo` FROM users WHERE usertoken='$session_id' LIMIT 1";
+        $result = $this->dbConnection->query($query);
+
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row[$info];
+        } else {
+            return null; // User or data not found
         }
     }
 
