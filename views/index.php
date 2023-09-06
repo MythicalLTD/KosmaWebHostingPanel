@@ -335,7 +335,6 @@ include(__DIR__ . '/requirements/page.php');
                         </div>
                      </div>
                      <?php include(__DIR__ . '/components/footer.php') ?>
-
                   </div>
                </div>
             </div>

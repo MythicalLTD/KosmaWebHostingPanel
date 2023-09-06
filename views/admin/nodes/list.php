@@ -17,38 +17,55 @@ $totalResult = $conn->query($totalNodesQuery);
 $totalNodes = $totalResult->fetch_assoc()['total_nodes'];
 $totalPages = ceil($totalNodes / $nodesPerPage);
 ?>
-
 <!DOCTYPE html>
-
-<html lang="en" class="dark-style layout-navbar-fixed layout-menu-fixed" dir="ltr" data-theme="theme-semi-dark"
-    data-assets-path="/assets/" data-template="vertical-menu-template">
+<!--
+   Author: Keenthemes
+   Product Name: Metronic
+   Product Version: 8.1.8
+   Purchase: https://1.envato.market/EA4JP
+   Website: http://www.keenthemes.com
+   Contact: support@keenthemes.com
+   Follow: www.twitter.com/keenthemes
+   Dribbble: www.dribbble.com/keenthemes
+   Like: www.facebook.com/keenthemes
+   License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
+   -->
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <?php include(__DIR__ . '/../../requirements/head.php'); ?>
+    <base href="/" />
     <title>
         <?= $settingsManager->getSetting('name') ?> - Dashboard
     </title>
-    <link rel="stylesheet" href="<?= $appURL ?>/assets/vendor/css/pages/page-help-center.css" />
+    <?php include(__DIR__ . '/../../requirements/head.php'); ?>
+    <link rel="icon" type="image/x-icon" href="<?= $logo ?>" />
 </head>
 
-<body>
-    <div id="preloader" class="discord-preloader">
-        <div class="spinner"></div>
-    </div>
-    <div class="layout-wrapper layout-content-navbar">
-        <div class="layout-container">
-            <?php include(__DIR__ . '/../../components/sidebar.php') ?>
-            <div class="layout-page">
-                <?php include(__DIR__ . '/../../components/navbar.php') ?>
-                <div class="content-wrapper">
-                    <div class="container-xxl flex-grow-1 container-p-y">
-                        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Admin /</span> Nodes</h4>
-                        <?php include(__DIR__ . '/../../components/alert.php') ?>
-                        <!-- Search Form -->
-                        <form class="mt-4">
+<body id="kt_app_body" data-kt-app-header-fixed-mobile="true" data-kt-app-toolbar-enabled="true" class="app-default">
+    <script>
+        var defaultThemeMode = "light";
+        var themeMode;
+        if (document.documentElement) {
+            if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
+                themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
+            } else {
+                if (localStorage.getItem("data-bs-theme") !== null) { themeMode = localStorage.getItem("data-bs-theme"); }
+                else { themeMode = defaultThemeMode; }
+            }
+            if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+            document.documentElement.setAttribute("data-bs-theme", themeMode);
+        }
+    </script>
+    <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+        <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+            <?php include(__DIR__ . '/../../components/navbar.php') ?>
+            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+                <div class="app-container container-xxl d-flex">
+                    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                        <div class="d-flex flex-column flex-column-fluid">
+                            <div id="kt_app_content" class="app-content">
+                                <div class="row g-5 g-xxl-10">
+                                <form class="mt-4">
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Search nodes..." name="search"
                                     value="<?= $searchKeyword ?>">
@@ -90,17 +107,16 @@ $totalPages = ceil($totalNodes / $nodesPerPage);
                                 </table>
                             </div>
                         </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php include(__DIR__ . '/../../components/footer.php') ?>
                     </div>
-                    <?php include(__DIR__ . '/../../components/footer.php') ?>
-                    <div class="content-backdrop fade"></div>
                 </div>
             </div>
         </div>
-        <div class="layout-overlay layout-menu-toggle"></div>
-        <div class="drag-target"></div>
     </div>
     <?php include(__DIR__ . '/../../requirements/footer.php') ?>
-    <script src="<?= $appURL ?>/assets/js/dashboards-ecommerce.js"></script>
 </body>
 
 </html>
