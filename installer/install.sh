@@ -217,6 +217,7 @@ apt upgrade -y
 service mariadb start
 # Create database and user
 mariadb -e "CREATE USER 'KosmaPanel'@'127.0.0.1' IDENTIFIED BY '$mysql_password'; CREATE DATABASE kosma_panel; GRANT ALL PRIVILEGES ON kosma_panel.* TO 'KosmaPanel'@'127.0.0.1' WITH GRANT OPTION;" || error "Failed to create database and user"
+sudo apt-get install libapache2-mod-fcgid
 
 # Set permissions on Panel files
 set_permissions
