@@ -1,68 +1,76 @@
 <!DOCTYPE html>
-
-
-<html lang="en" class="dark-style layout-navbar-fixed layout-menu-fixed" dir="ltr" data-theme="theme-semi-dark"
-    data-assets-path="/assets/" data-template="vertical-menu-template">
+<!--
+Author: Keenthemes
+Product Name: Metronic
+Product Version: 8.1.8
+Purchase: https://1.envato.market/EA4JP
+Website: http://www.keenthemes.com
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
+-->
+<html lang="en">
 
 <head>
+    <base href="/" />
+    <title>KosmaPanel - 404</title>
     <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>Error - 404</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="/assets/vendor/fonts/fontawesome.css" />
-    <link rel="stylesheet" href="/assets/vendor/fonts/tabler-icons.css" />
-    <link rel="stylesheet" href="/assets/vendor/fonts/flag-icons.css" />
-    <link rel="stylesheet" href="/assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="/assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="/assets/css/demo.css" />
-    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="/assets/vendor/libs/node-waves/node-waves.css" />
-    <link rel="stylesheet" href="/assets/vendor/libs/typeahead-js/typeahead.css" />
-    <link rel="stylesheet" href="/assets/vendor/css/pages/page-misc.css" />
-    <script src="/assets/vendor/js/helpers.js"></script>
-    <script src="/assets/vendor/js/template-customizer.js"></script>
-    <script src="/assets/js/config.js"></script>
-    <style>
-        body{
-            overflow: hidden;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+    <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
+<body id="kt_body" class="app-blank bgi-size-cover bgi-position-center bgi-no-repeat">
+    <script>
+        var defaultThemeMode = "light";
+        var themeMode;
+        if (document.documentElement) {
+            if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
+                themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
+            } else {
+                if (localStorage.getItem("data-bs-theme") !== null) { themeMode = localStorage.getItem("data-bs-theme"); }
+                else { themeMode = defaultThemeMode; }
+            }
+            if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+            document.documentElement.setAttribute("data-bs-theme", themeMode);
+        }
+    </script>
+    <div class="d-flex flex-column flex-root" id="kt_app_root">
+        <style>
+            body {
+                background-image: url('/assets/media/auth/bg1.jpg');
+            }
 
-    <div class="container-xxl container-p-y">
-        <div class="misc-wrapper">
-            <h2 class="mb-1 mt-4">Page Not Found :(</h2>
-            <p class="mb-4 mx-2">Oops! 😖 The requested URL was not found on this server.</p>
-            <a href="/" class="btn btn-primary mb-4">Back to home</a>
-            <div class="mt-4">
-                <img src="/assets/img/illustrations/page-misc-error.png" alt="page-misc-error" width="225"
-                    class="img-fluid" />
+            [data-bs-theme="dark"] body {
+                background-image: url('/assets/media/auth/bg1-dark.jpg');
+            }
+        </style>
+        <div class="d-flex flex-column flex-center flex-column-fluid">
+            <div class="d-flex flex-column flex-center text-center p-10">
+                <div class="card card-flush w-lg-650px py-5">
+                    <div class="card-body py-15 py-lg-20">
+                        <h1 class="fw-bolder fs-2hx text-gray-900 mb-4">Oops!</h1>
+                        <div class="fw-semibold fs-6 text-gray-500 mb-7">We can't find that page.</div>
+                        <div class="mb-3">
+                            <img src="/assets/media/auth/404-error.png" class="mw-100 mh-300px theme-light-show"
+                                alt="" />
+                            <img src="/assets/media/auth/404-error-dark.png" class="mw-100 mh-300px theme-dark-show"
+                                alt="" />
+                        </div>
+                        <div class="mb-0">
+                            <a href="/" class="btn btn-sm btn-primary">Return Home</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="container-fluid misc-bg-wrapper">
-        <img src="/assets/img/illustrations/bg-shape-image-light.png" alt="page-misc-error"
-            data-app-light-img="illustrations/bg-shape-image-light.png"
-            data-app-dark-img="illustrations/bg-shape-image-dark.png" />
-    </div>
-
-    <script src="/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="/assets/vendor/libs/popper/popper.js"></script>
-    <script src="/assets/vendor/js/bootstrap.js"></script>
-    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="/assets/vendor/libs/node-waves/node-waves.js"></script>
-    <script src="/assets/vendor/libs/hammer/hammer.js"></script>
-    <script src="/assets/vendor/libs/i18n/i18n.js"></script>
-    <script src="/assets/vendor/libs/typeahead-js/typeahead.js"></script>
-    <script src="/assets/vendor/js/menu.js"></script>
-    <script src="/assets/js/main.js"></script>
+    <script>var hostUrl = "/assets/";</script>
+    <script src="/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="/assets/js/scripts.bundle.js"></script>
 </body>
 
 </html>

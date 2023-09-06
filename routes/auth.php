@@ -23,7 +23,7 @@ $router->add('/auth/reset-password', function () {
 });
 
 $router->add('/auth/logout', function () {
-    //require("../functions/logout.php");
+    require("../views/auth/logout.php");
 });
 
 ?>
