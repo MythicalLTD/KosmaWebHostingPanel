@@ -53,7 +53,6 @@ $totalPages = ceil($totalUsers / $usersPerPage);
                         class="app-container container-xxl d-flex flex-stack flex-row-fluid">
                         <div class="d-flex flex-stack flex-row-fluid">
                             <div class="app-container container-xxl d-flex">
-                                <?php include(__DIR__ . '/../components/sidebar.php'); ?>
                                 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                                     <div class="d-flex flex-column flex-column-fluid">
                                         <div id="kt_app_content" class="app-content">
@@ -63,9 +62,11 @@ $totalPages = ceil($totalUsers / $usersPerPage);
                                                         <div class="d-flex align-items-center position-relative my-1">
                                                             <i
                                                                 class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i>
+                                                                <form method="GET">
+                                                                
                                                             <input type="text" data-kt-user-table-filter="search"
                                                                 class="form-control form-control-solid w-250px ps-13"
-                                                                placeholder="Search user">
+                                                                placeholder="Search user" name="search" value="<?= $searchKeyword ?>"></form>
                                                         </div>
                                                     </div>
                                                     <div class="card-toolbar">

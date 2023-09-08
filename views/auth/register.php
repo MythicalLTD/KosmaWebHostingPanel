@@ -93,11 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         die();
                     }
                     if (mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE email='" . $email . "'")) > 0) {
-                        header("location: /auth/register?e=This username is already in the database.");
+                        header("location: /auth/register?e=This email is already in the database.");
                         die();
                     }
                     if (mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE username='" . $username . "'")) > 0) {
-                        header("location: /auth/register?e=This email is already in the database.");
+                        header("location: /auth/register?e=This username is already in the database.");
                         die();
                     } else {
 

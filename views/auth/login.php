@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 if ($code == "") {
                                     if (password_verify($password, $hashedPassword)) {
                                         if ($row['suspended'] == "false") {
+                                            //TODO: Add a method to check if users logs in more then 3 times and if yes to timeout him!
                                             $conn->query("UPDATE `users` SET `last_ip` = '" . $kosma_encryption->encrypt($ip_address, $encryption) . "' WHERE `users`.`id` = " . $row['id'] . ";");
                                             $token = $row['usertoken'];
                                             $cookie_name = 'token';
