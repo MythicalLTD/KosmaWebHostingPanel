@@ -1,5 +1,9 @@
 <?php
 include(__DIR__ . '/../../requirements/page.php');
+include(__DIR__ . '/../requirements/admin.php');
+use Kosma\Nodes\NodeConnection;
+$checker = new NodeConnection();
+
 
 $nodesPerPage = 20;
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
@@ -55,6 +59,7 @@ $totalPages = ceil($totalNodes / $nodesPerPage);
                         <div class="d-flex flex-stack flex-row-fluid">
                             <div class="app-container container-xxl d-flex">
                                 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                                <?php include(__DIR__ . '/../../components/alert.php') ?>
                                     <div class="d-flex flex-column flex-column-fluid">
                                         <div id="kt_app_content" class="app-content">
                                             <div class="card">
@@ -94,22 +99,22 @@ $totalPages = ceil($totalNodes / $nodesPerPage);
                                                                         <th class="min-w-125px sorting" tabindex="0"
                                                                             aria-controls="kt_table_users" rowspan="1"
                                                                             colspan="1"
-                                                                            aria-label="User: activate to sort column ascending"
+                                                                            aria-label="Node: activate to sort column ascending"
                                                                             style="width: 215.016px;">Node</th>
                                                                         <th class="min-w-125px sorting" tabindex="0"
                                                                             aria-controls="kt_table_users" rowspan="1"
                                                                             colspan="1"
-                                                                            aria-label="Username: activate to sort column ascending"
+                                                                            aria-label="Description: activate to sort column ascending"
                                                                             style="width: 125px;">Description</th>
                                                                         <th class="min-w-125px sorting" tabindex="0"
                                                                             aria-controls="kt_table_users" rowspan="1"
                                                                             colspan="1"
-                                                                            aria-label="Role: activate to sort column ascending"
+                                                                            aria-label="Host: activate to sort column ascending"
                                                                             style="width: 125px;">Host</th>
                                                                         <th class="min-w-125px sorting" tabindex="0"
                                                                             aria-controls="kt_table_users" rowspan="1"
                                                                             colspan="1"
-                                                                            aria-label="Joined Date: activate to sort column ascending"
+                                                                            aria-label="Created Date: activate to sort column ascending"
                                                                             style="width: 159.688px;">Created Date</th>
                                                                         <th class="text-end min-w-100px sorting_disabled"
                                                                             rowspan="1" colspan="1" aria-label="Actions"
@@ -118,29 +123,79 @@ $totalPages = ceil($totalNodes / $nodesPerPage);
                                                                 </thead>
                                                                 <tbody class="text-gray-600 fw-semibold">
                                                                     <?php
-                                                                    // Loop through your user data and populate the table rows here
                                                                     while ($row = $result->fetch_assoc()) {
                                                                         ?>
                                                                         <tr class="odd">
                                                                             <td class="d-flex align-items-center">
                                                                                 <div
                                                                                     class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                                                                    <a href="#">
+                                                                                    <a href="/admin/nodes/info?id=<?= $row['id'] ?>">
                                                                                         <div class="symbol-label">
-                                                                                            <img src="https://img.icons8.com/ios-filled/100/40C057/filled-circle.png"
+                                                                                            <?php 
+                                                                                            $NodeResult = $checker->checkStatus($row['host'], $row['auth_key']);
+                                                                                            if ($NodeResult == "online") {
+                                                                                                ?>
+                                                                                                <img src="https://img.icons8.com/sf-black-filled/64/40C057/like.png"
                                                                                                 alt="Online"
                                                                                                 class="w-100">
+                                                                                                <?php
+                                                                                            } else if ($NodeResult == "offline") {
+                                                                                                ?> 
+                                                                                                <img src="https://img.icons8.com/glyph-neue/64/FA5252/--broken-heart.png"
+                                                                                                alt="Offline"
+                                                                                                class="w-100">
+                                                                                                <?php
+                                                                                            } else if ($NodeResult == "unauthorized") {
+                                                                                                ?> 
+                                                                                                <img src="https://img.icons8.com/ios-filled/50/FA5252/lock-2.png"
+                                                                                                alt="Offline"
+                                                                                                class="w-100">
+                                                                                                <?php
+                                                                                            }
+                                                                                            else {
+                                                                                                ?> 
+                                                                                                <img src="https://img.icons8.com/glyph-neue/64/FA5252/--broken-heart.png"
+                                                                                                    alt="Offline"
+                                                                                                    class="w-100">
+                                                                                                    <script>
+                                                                                                        console.error("<?= $NodeResult ?>");
+                                                                                                    </script>
+                                                                                                <?php
+                                                                                            }                                                                                            
+                                                                                            ?>
+                                                                                            
                                                                                         </div>
                                                                                     </a>
                                                                                 </div>
                                                                                 <div class="d-flex flex-column">
-                                                                                    <a href="#"
+                                                                                    <a href="/admin/nodes/info?id=<?= $row['id'] ?>"
                                                                                         class="text-gray-800 text-hover-primary mb-1">
                                                                                         <?php echo $row['name']; ?>
                                                                                         
                                                                                     </a>
                                                                                     <span>
-                                                                                        Online
+                                                                                    <?php 
+                                                                                            $NodeResult = $checker->checkStatus($row['host'], $row['auth_key']);
+                                                                                            if ($NodeResult == "online") {
+                                                                                                ?>
+                                                                                                Online
+                                                                                                <?php
+                                                                                            } else if ($NodeResult == "offline") {
+                                                                                                ?> 
+                                                                                                Offline
+                                                                                                <?php
+                                                                                            } else if ($NodeResult == "unauthorized") { 
+                                                                                                ?> 
+                                                                                                Unauthorized (Server token is incorrect)
+                                                                                                <?php
+                                                                                            }
+                                                                                            else {
+                                                                                                ?> 
+                                                                                                Offline
+                                                                                                <?php
+                                                                                            }
+                                                                                            ?>
+                                                                                        
                                                                                     </span>
                                                                                 </div>
                                                                             </td>

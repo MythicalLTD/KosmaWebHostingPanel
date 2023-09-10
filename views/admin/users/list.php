@@ -54,6 +54,7 @@ $totalPages = ceil($totalUsers / $usersPerPage);
                         <div class="d-flex flex-stack flex-row-fluid">
                             <div class="app-container container-xxl d-flex">
                                 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                                <?php include(__DIR__ . '/../../components/alert.php') ?>
                                     <div class="d-flex flex-column flex-column-fluid">
                                         <div id="kt_app_content" class="app-content">
                                             <div class="card">
@@ -62,11 +63,13 @@ $totalPages = ceil($totalUsers / $usersPerPage);
                                                         <div class="d-flex align-items-center position-relative my-1">
                                                             <i
                                                                 class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i>
-                                                                <form method="GET">
-                                                                
-                                                            <input type="text" data-kt-user-table-filter="search"
-                                                                class="form-control form-control-solid w-250px ps-13"
-                                                                placeholder="Search user" name="search" value="<?= $searchKeyword ?>"></form>
+                                                            <form method="GET">
+
+                                                                <input type="text" data-kt-user-table-filter="search"
+                                                                    class="form-control form-control-solid w-250px ps-13"
+                                                                    placeholder="Search user" name="search"
+                                                                    value="<?= $searchKeyword ?>">
+                                                            </form>
                                                         </div>
                                                     </div>
                                                     <div class="card-toolbar">
@@ -117,7 +120,6 @@ $totalPages = ceil($totalUsers / $usersPerPage);
                                                                 </thead>
                                                                 <tbody class="text-gray-600 fw-semibold">
                                                                     <?php
-                                                                    // Loop through your user data and populate the table rows here
                                                                     while ($row = $result->fetch_assoc()) {
                                                                         ?>
                                                                         <tr class="odd">

@@ -183,32 +183,7 @@ License: For each use you must have a valid license purchased only from above li
                                     <h1 class="text-dark fw-bolder mb-3">Sign In</h1>
                                     <div class="text-gray-500 fw-semibold fs-6">Please sign-in to your account.</div>
                                 </div>
-                                <?php
-                                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                                    if (isset($_GET['e'])) {
-                                        ?>
-                                        <div class="alert alert-danger alert-dismissible" role="alert">
-                                            <?= $_GET['e'] ?>
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <?php
-                                    }
-                                }
-                                ?>
-                                <?php
-                                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                                    if (isset($_GET['s'])) {
-                                        ?>
-                                        <div class="alert alert-success alert-dismissible" role="alert">
-                                            <?= $_GET['s'] ?>
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <?php
-                                    }
-                                }
-                                ?>
+                                <?php include(__DIR__ . '/../components/alert.php') ?>
                                 <div class="fv-row mb-8">
                                     <input type="email" placeholder="Email" name="email" autocomplete="off"
                                         class="form-control bg-transparent" required />

@@ -233,32 +233,7 @@ License: For each use you must have a valid license purchased only from above li
                                     <div class="text-gray-500 fw-semibold fs-6">Please sign-up for an account.</div>
 
                                 </div>
-                                <?php
-                                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                                    if (isset($_GET['e'])) {
-                                        ?>
-                                        <div class="alert alert-danger alert-dismissible" role="alert">
-                                            <?= $_GET['e'] ?>
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <?php
-                                    }
-                                }
-                                ?>
-                                <?php
-                                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                                    if (isset($_GET['s'])) {
-                                        ?>
-                                        <div class="alert alert-success alert-dismissible" role="alert">
-                                            <?= $_GET['s'] ?>
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <?php
-                                    }
-                                }
-                                ?>
+                                <?php include(__DIR__ . '/../components/alert.php') ?>
                                 <div class="mb-3">
                                     <label for="first_name" class="form-label">First Name</label>
                                     <input type="text" class="form-control" id="first_name" name="first_name"

@@ -77,7 +77,7 @@ function is_active_page($page_urls)
          class="menu menu-rounded menu-column menu-lg-row menu-title-gray-600 menu-state-dark menu-arrow-gray-400 fw-semibold fw-semibold fs-6 align-items-stretch my-5 my-lg-0 px-2 px-lg-0"
          id="#kt_app_header_menu" data-kt-menu="true">
          <div
-            class="menu-item <?php echo is_active_page(['/']) ? 'here show menu-here-bg' : ''; ?>  menu-lg-down-accordion me-0 me-lg-2"
+            class="menu-item <?php echo is_active_page(['/home']) ? 'here show menu-here-bg' : ''; ?>  menu-lg-down-accordion me-0 me-lg-2"
             onclick="window.location.href='/'">
             <span class="menu-link">
                <span class="menu-icon">
@@ -880,7 +880,7 @@ function is_active_page($page_urls)
          if ($sessionManager->getUserInfo('role') == "Administrator") {
             ?>
             <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-               data-kt-menu-offset="22,0" class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+               data-kt-menu-offset="22,0" class="menu-item <?php echo is_active_page(['/admin/']) ? 'here show menu-here-bg' : ''; ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
                <span class="menu-link">
                   <span class="menu-icon">
                      <i class="ki-outline ki-setting-2"></i>

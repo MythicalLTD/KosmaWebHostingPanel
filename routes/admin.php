@@ -9,6 +9,11 @@ $router->add('/admin/nodes', function () {
     require("../views/admin/nodes/list.php");
 });
 
+$router->add('/admin/nodes/info', function () {
+    require("../views/admin/nodes/info.php");
+});
+
+
 $router->add('/admin/users', function () {
     require("../views/admin/users/list.php");
 });
