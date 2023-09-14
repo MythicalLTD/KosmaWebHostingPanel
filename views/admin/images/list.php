@@ -28,7 +28,7 @@ $totalPages = ceil($totalNodes / $nodesPerPage);
 <head>
     <base href="/" />
     <title>
-        <?= $settingsManager->getSetting('name') ?> | Nodes
+        <?= $settingsManager->getSetting('name') ?> | Imagies
     </title>
     <?php include(__DIR__ . '/../../requirements/head.php'); ?>
     <link rel="icon" type="image/x-icon" href="<?= $logo ?>" />
@@ -127,39 +127,9 @@ $totalPages = ceil($totalNodes / $nodesPerPage);
                                                                                     class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                                                                     <a href="/admin/nodes/info?id=<?= $row['id'] ?>">
                                                                                         <div class="symbol-label">
-                                                                                            <?php 
-                                                                                            $NodeResult = $checker->checkStatus($row['host'], $row['auth_key']);
-                                                                                            if ($NodeResult == "online") {
-                                                                                                ?>
-                                                                                                <img src="https://img.icons8.com/sf-black-filled/64/40C057/like.png"
-                                                                                                alt="Online"
-                                                                                                class="w-100">
-                                                                                                <?php
-                                                                                            } else if ($NodeResult == "offline") {
-                                                                                                ?> 
-                                                                                                <img src="https://img.icons8.com/glyph-neue/64/FA5252/--broken-heart.png"
-                                                                                                alt="Offline"
-                                                                                                class="w-100">
-                                                                                                <?php
-                                                                                            } else if ($NodeResult == "unauthorized") {
-                                                                                                ?> 
-                                                                                                <img src="https://img.icons8.com/ios-filled/50/FA5252/lock-2.png"
-                                                                                                alt="Offline"
-                                                                                                class="w-100">
-                                                                                                <?php
-                                                                                            }
-                                                                                            else {
-                                                                                                ?> 
-                                                                                                <img src="https://img.icons8.com/glyph-neue/64/FA5252/--broken-heart.png"
+                                                                                        <img src="https://img.icons8.com/glyph-neue/64/FA5252/--broken-heart.png"
                                                                                                     alt="Offline"
                                                                                                     class="w-100">
-                                                                                                    <script>
-                                                                                                        console.error("<?= $NodeResult ?>");
-                                                                                                    </script>
-                                                                                                <?php
-                                                                                            }                                                                                            
-                                                                                            ?>
-                                                                                            
                                                                                         </div>
                                                                                     </a>
                                                                                 </div>
@@ -170,28 +140,7 @@ $totalPages = ceil($totalNodes / $nodesPerPage);
                                                                                         
                                                                                     </a>
                                                                                     <span>
-                                                                                    <?php 
-                                                                                            $NodeResult = $checker->checkStatus($row['host'], $row['auth_key']);
-                                                                                            if ($NodeResult == "online") {
-                                                                                                ?>
-                                                                                                Online
-                                                                                                <?php
-                                                                                            } else if ($NodeResult == "offline") {
-                                                                                                ?> 
-                                                                                                Offline
-                                                                                                <?php
-                                                                                            } else if ($NodeResult == "unauthorized") { 
-                                                                                                ?> 
-                                                                                                Unauthorized (Server token is incorrect)
-                                                                                                <?php
-                                                                                            }
-                                                                                            else {
-                                                                                                ?> 
-                                                                                                Offline
-                                                                                                <?php
-                                                                                            }
-                                                                                            ?>
-                                                                                        
+                                                                                    Offline
                                                                                     </span>
                                                                                 </div>
                                                                             </td>
@@ -216,19 +165,6 @@ $totalPages = ceil($totalNodes / $nodesPerPage);
                                                                                         class="ki-outline ki-down fs-5 ms-1"></i></a>
                                                                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
                                                                                     data-kt-menu="true">
-                                                                                    <?php if ($NodeResult == "online") {
-                                                                                    ?>
-                                                                                        <div class="menu-item px-3">
-                                                                                            <a href="/admin/nodes/shutdown?id=<?php echo $row['id']; ?>"
-                                                                                                class="menu-link px-3">Shutdown</a>
-                                                                                        </div>
-                                                                                        <div class="menu-item px-3">
-                                                                                            <a href="/admin/nodes/reboot?id=<?php echo $row['id']; ?>"
-                                                                                                class="menu-link px-3">Reboot</a>
-                                                                                        </div>
-                                                                                    <?php
-                                                                                    }
-                                                                                    ?>
                                                                                     <div class="menu-item px-3">
                                                                                         <a href="/admin/nodes/edit?id=<?php echo $row['id']; ?>"
                                                                                             class="menu-link px-3">Edit</a>
