@@ -22,7 +22,7 @@ if (isset($_GET['id']) && !$_GET['id'] == "") {
                     if ($NodeData !== null) {
                         ?>
                         <script>
-                            alert("OS: <?= $NodeData['os_type'] ?>\nKernel: <?= $NodeData['kernel'] ?> \nUptime: <?= $NodeData['uptime']['days'] . ' days, ' . $NodeData['uptime']['hours'] . ' hours, ' . $NodeData['uptime']['minutes'] . ' minutes' ?> \nDisk <?= $NodeData['disk_info']['used'] . ' (Used) / ' . $NodeData['disk_info']['free'] . ' (Free) / ' . $NodeData['disk_info']['total'] . ' (Total)' ?> \nRam: <?= $NodeData['ram_info']['used'] . ' (Used) / ' . $NodeData['ram_info']['free'] . ' (Free) / ' . $NodeData['ram_info']['total'] . ' (Total)' ?>\nCPU Usage: <?= $NodeData['cpu_info']['usage'] . '%/100%' ?>\nCPU Name: <?= $NodeData['cpu_info']['name'] ?>");
+                            alert("OS: <?= $NodeData['os_type']?>\nKernel: <?= $NodeData['kernel'] ?>\nCPU Name: <?= $NodeData['cpu_info']['name'] ?>\nUptime: <?= $NodeData['uptime']?>\nDisk: <?= $NodeData['disk_info']['used']?>MB / <?= $NodeData['disk_info']['total']?>MB (Free: <?= $NodeData['disk_info']['free']?>MB)\nMemory: <?= $NodeData['ram_info']['used']?>MB / <?= $NodeData['ram_info']['total']?>MB (Free: <?= $NodeData['ram_info']['free']?>MB)\nCPU Usage: <?= $NodeData['cpu_info']['usage'] ?>/100%");
                             window.location.replace("/admin/nodes");
                         </script>
                         <?php

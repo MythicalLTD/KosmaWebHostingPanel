@@ -52,13 +52,18 @@ if (isset($_POST['submit']) && $_POST['submit'] == "") {
                         $client = new Client();
                         try {
                             try {
-                                $response = $client->post($host . '/api/daemon/info', [
-                                    'form_params' => ['system_token' => $auth_key],
-                                ]);
-    
+                                $headers = [
+                                    'Authorization' =>  $auth_key, 
+                                    'Content-Type' => 'application/json',
+                                ];
+                                $options = [
+                                    'headers' => $headers, 
+                                ];
+                                $response = $client->post($host . '/system/info',$options);
+
                                 $statusCode = $response->getStatusCode();
                                 $data = json_decode($response->getBody(), true);
-    
+
                                 if ($statusCode === 200) {
                                     if (json_last_error() === JSON_ERROR_NONE) {
                                         if (isset($data['code']) && $data['code'] === 200) {
@@ -71,69 +76,69 @@ if (isset($_POST['submit']) && $_POST['submit'] == "") {
                                                 $conn->query("INSERT INTO `nodes` (`name`, `description`, `host`, `auth_key`) VALUES ('" . $name . "', '" . $dsc . "', '" . $host . "', '" . $auth_key . "')");
                                                 $conn->close();
                                                 $stmt->close();
-                                                header('location: /admin/nodes?s=We connected to the node: <code>' . $data['error'] . '</code>');
+                                                header('location: /admin/nodes?s=We connected to the node');
                                                 die();
                                             } else {
                                                 $conn->close();
                                                 $stmt->close();
-                                                header('location: /admin/nodes?e=Failed to connect to the node: <code>ENC:1 This node already exists in the database.</code>');
+                                                header('location: /admin/nodes/create?e=Failed to connect to the node: <code>ENC:1 This node already exists in the database.</code>');
                                                 die();
                                             }
                                         } else {
-                                            header('location: /admin/nodes?e=Failed to connect to the node: <code>ENC:2 ' . $data['error'] . '</code>');
+                                            header('location: /admin/nodes/create?e=Failed to connect to the node: <code>ENC:2 ' . $data['error'] . '</code>');
                                             die();
                                         }
                                     } else {
-                                        header('location: /admin/nodes?e=Failed to connect to the node: <code>ENC:3 Invalid JSON response</code>');
+                                        header('location: /admin/nodes/create?e=Failed to connect to the node: <code>ENC:3 Invalid JSON response</code>');
                                         die();
                                     }
                                 } else {
-                                    header('location: /admin/nodes?e=Failed to connect to the node: <code>ENC:4 Unexpected status code:' . $statusCode . '</code>');
+                                    header('location: /admin/nodes/create?e=Failed to connect to the node: <code>ENC:4 Unexpected status code:' . $statusCode . '</code>');
                                     die();
                                 }
                             } catch (RequestException $e) {
                                 if ($e->hasResponse()) {
                                     $response = $e->getResponse();
                                     $statusCode = $response->getStatusCode();
-    
+
                                     $data = json_decode($response->getBody(), true);
-    
+
                                     if (json_last_error() === JSON_ERROR_NONE) {
-                                        header('location: /admin/nodes?e=Failed to connect to the node: <code>ENC:5 ' . $data['error'] . '</code>');
+                                        header('location: /admin/nodes/create?e=Failed to connect to the node: <code>ENC:5 ' . $data['error'] . '</code>');
                                         die();
                                     } else {
-                                        header('location: /admin/nodes?e=Failed to connect to the node: <code>ENC:6 ' . $response->getReasonPhrase() . '</code>');
+                                        header('location: /admin/nodes/create?e=Failed to connect to the node: <code>ENC:6 ' . $response->getReasonPhrase() . '</code>');
                                         die();
                                     }
                                 } else {
-                                    header('location: /admin/nodes?e=Failed to connect to the node: <code>ENC:7 ' . $e->getMessage() . '</code>');
+                                    header('location: /admin/nodes/create?e=Failed to connect to the node: <code>ENC:7 ' . $e->getMessage() . '</code>');
                                     die();
                                 }
                             }
                         } catch (Exception $exed) {
-                            header('location: /admin/nodes?e=Failed to connect to the node: <code>ENC:8 Some unexpected error occurred.</code>');
+                            header('location: /admin/nodes/create?e=Failed to connect to the node: <code>ENC:8 Some unexpected error occurred.</code>');
                             die();
                         }
                     } else {
-                        header('location: /admin/nodes?e=Failed to connect to the node: <code>ENC:9 Please use a https connection</code>');
+                        header('location: /admin/nodes/create?e=Failed to connect to the node: <code>ENC:9 Please use a https connection</code>');
                         die();
                     }
 
                 } else {
-                    header('location: /admin/nodes?e=Failed to connect to the node: <code>ENC:10 This is not a valid url please remove the / after the url</code>');
+                    header('location: /admin/nodes/create?e=Failed to connect to the node: <code>ENC:10 This is not a valid url please remove the / after the url</code>');
                     die();
                 }
 
             } else {
-                header('location: /admin/nodes?e=Failed to connect to the node: <code>ENC:11 This is not a valid url</code>');
+                header('location: /admin/nodes/create?e=Failed to connect to the node: <code>ENC:11 This is not a valid url</code>');
                 die();
             }
         } else {
-            header('location: /admin/nodes?e=Failed to connect to the node: <code>ENC:12 This is not a valid domain</code>');
+            header('location: /admin/nodes/create?e=Failed to connect to the node: <code>ENC:12 This is not a valid domain</code>');
             die();
         }
     } else {
-        header('location: /admin/nodes?e=Please fill in all required information');
+        header('location: /admin/nodes/create?e=Please fill in all required information');
         die();
     }
 }
@@ -144,7 +149,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == "") {
 <head>
     <base href="/" />
     <title>
-        <?= $settingsManager->getSetting('name') ?> | Users
+        <?= $settingsManager->getSetting('name') ?> | Add node
     </title>
     <?php include(__DIR__ . '/../../requirements/head.php'); ?>
     <link rel="icon" type="image/x-icon" href="<?= $logo ?>" />

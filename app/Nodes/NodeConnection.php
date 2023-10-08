@@ -16,9 +16,14 @@ class NodeConnection
     public function checkStatus($host, $token)
     {
         try {
-            $response = $this->client->post($host . '/api/daemon/info', [
-                'form_params' => ['system_token' => $token]
-            ]);
+            $headers = [
+                'Authorization' => $token,
+                'Content-Type' => 'application/json',
+            ];
+            $options = [
+                'headers' => $headers,
+            ];
+            $response = $this->client->post($host . '/system/info', $options);
 
             $statusCode = $response->getStatusCode();
             if ($statusCode == 200) {
@@ -37,9 +42,14 @@ class NodeConnection
     public function getNodeInfo($host, $token)
     {
         try {
-            $response = $this->client->post($host . '/api/daemon/info', [
-                'form_params' => ['system_token' => $token],
-            ]);
+            $headers = [
+                'Authorization' => $token,
+                'Content-Type' => 'application/json',
+            ];
+            $options = [
+                'headers' => $headers,
+            ];
+            $response = $this->client->post($host . '/system/info', $options);
 
             $statusCode = $response->getStatusCode();
             if ($statusCode == 200) {
@@ -49,15 +59,21 @@ class NodeConnection
                 return null;
             }
         } catch (RequestException $e) {
-            return null; 
+            return null;
         }
     }
 
     public function AdvancedCheckStatus($host, $token)
     {
-        $response = $this->client->post($host . '/api/daemon/info', [
-            'form_params' => ['system_token' => $token]
-        ]);
+        $headers = [
+            'Authorization' => $token,
+            'Content-Type' => 'application/json',
+        ];
+        $options = [
+            'headers' => $headers,
+        ];
+        $response = $this->client->post($host . '/system/info', $options);
+
 
         $statusCode = $response->getStatusCode();
         if ($statusCode == 200) {
