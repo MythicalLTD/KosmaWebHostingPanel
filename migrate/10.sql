@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `registred` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `verification_code`;

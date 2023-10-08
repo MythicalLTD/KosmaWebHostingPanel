@@ -1,1 +1,1 @@
-ALTER TABLE `users` ADD `role` ENUM('default','administrator') NOT NULL DEFAULT 'default' AFTER `usertoken`;
+ALTER TABLE `users` ADD `role` ENUM('User','Administrator') NOT NULL DEFAULT 'User' AFTER `suspended`;

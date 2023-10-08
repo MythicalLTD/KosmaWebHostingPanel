@@ -1,21 +1,21 @@
-<footer class="content-footer footer bg-footer-theme">
-  <div class="container-xxl">
-    <div
-      class="footer-container d-flex align-items-center justify-content-between py-2 flex-md-row flex-column"
-    >
-      <div>
-        Copyright © 2022 - 
-        <script>
-          document.write(new Date().getFullYear());
-        </script>
-        , made with ❤️ by <a href="https://github.com/mythicalltd" target="_blank" class="fw-semibold">MythicalSystems</a>
-      </div>
-      <div>
-        <a href="https://raw.githubusercontent.com/MythicalLTD/kosmapanel/main/LICENSE" class="footer-link me-4" target="_blank">License</a>
-        <a href="https://mythicaldocs.pages.dev" target="_blank" class="footer-link me-4">Documentation</a>
-        <a href="/help-center/tos" target="_blank" class="footer-link me-4" >Terms of Service</a>
-        <a href="/help-center/pp" target="_blank" class="footer-link d-none d-sm-inline-block" >Privacy Policy</a>
-      </div>
-    </div>
+<div id="kt_app_footer" class="app-footer d-flex flex-column flex-md-row flex-center flex-md-stack pb-3">
+  <div class="text-dark order-2 order-md-1">
+    <span class="text-muted fw-semibold me-1">Copyright © 2022 -
+      <script>
+        document.write(new Date().getFullYear());
+      </script>&copy;
+    </span>
+    <a href="https://mythicalsystems.me" target="_blank" class="text-gray-800 text-hover-primary">MythicalSystems</a>
   </div>
-</footer>
+  <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
+    <li class="menu-item">
+      <a href="https://mythicaldocs.pages.dev" target="_blank" class="menu-link px-2">Documentation</a>
+    </li>
+    <li class="menu-item">
+      <a href="https://discord.gg/P65Ehaez8u" target="_blank" class="menu-link px-2">Support</a>
+    </li>
+    <li class="menu-item">
+      <a href="https://github.com/sponsors/nayskutzu" target="_blank" class="menu-link px-2">Donate</a>
+    </li>
+  </ul>
+</div>

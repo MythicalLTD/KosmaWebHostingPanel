@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 if ($code == "") {
                                     if (password_verify($password, $hashedPassword)) {
                                         if ($row['suspended'] == "false") {
+                                            //TODO: Add a method to check if users logs in more then 3 times and if yes to timeout him!
                                             $conn->query("UPDATE `users` SET `last_ip` = '" . $kosma_encryption->encrypt($ip_address, $encryption) . "' WHERE `users`.`id` = " . $row['id'] . ";");
                                             $token = $row['usertoken'];
                                             $cookie_name = 'token';
@@ -108,140 +109,138 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <!DOCTYPE html>
-
-<html lang="en" class="dark-style layout-navbar-fixed layout-menu-fixed" dir="ltr" data-theme="theme-semi-dark"
-    data-assets-path="/assets/" data-template="vertical-menu-template">
+<!--
+Author: Keenthemes
+Product Name: Metronic
+Product Version: 8.1.8
+Purchase: https://1.envato.market/EA4JP
+Website: http://www.keenthemes.com
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
+-->
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-
+    <base href="/" />
     <title>
         <?= $name ?> - Login
-
     </title>
-
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link rel="icon" type="image/x-icon" href="<?= $logo ?>" />
-
-    <?php
-    include(__DIR__ . '/../requirements/head.php');
-    ?>
-    <link rel="stylesheet" href="/assets/vendor/css/pages/page-auth.css" />
+    <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
-
 </head>
 
-<body>
-    <!-- Content -->
+<body id="kt_body" class="app-blank bgi-size-cover bgi-attachment-fixed bgi-position-center">
+    <script>
+        var defaultThemeMode = "light";
+        var themeMode;
+        if (document.documentElement) {
+            if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
+                themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
+            } else {
+                if (localStorage.getItem("data-bs-theme") !== null) { themeMode = localStorage.getItem("data-bs-theme"); }
+                else { themeMode = defaultThemeMode; }
+            }
+            if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+            document.documentElement.setAttribute("data-bs-theme", themeMode);
+        }
+    </script>
+    <div class="d-flex flex-column flex-root" id="kt_app_root">
+        <style>
+            body {
+                background-image: url('/assets/media/auth/bg10.jpeg');
+            }
 
-    <div class="container-xxl">
-        <div class="authentication-wrapper authentication-basic container-p-y">
-            <div class="authentication-inner py-4">
-                <!-- Register Card -->
-                <div class="card">
-                    <div class="card-body">
-                        <!-- Logo -->
-                        <div class="app-brand justify-content-center mb-4 mt-2">
-                            <a href="/" class="app-brand-link gap-2">
-                                <span class="app-brand-text demo text-body fw-bold">
-                                    <?= $name ?>
-                                </span>
-                            </a>
-                        </div>
-                        <!-- /Logo -->
-                        <h4 class="mb-1 pt-2 text-center">Welcome to
-                            <?= $name ?> 👋
-                        </h4>
-                        <p class="mb-4 text-center">Please sign-in to your account and start the adventure </p>
-                        <?php
-                        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                            if (isset($_GET['e'])) {
-                                ?>
-                                <div class="alert alert-danger alert-dismissible" role="alert">
-                                    <?= $_GET['e'] ?>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                                <?php
-                            }
-                        }
-                        ?>
-                        <?php
-                        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                            if (isset($_GET['s'])) {
-                                ?>
-                                <div class="alert alert-success alert-dismissible" role="alert">
-                                    <?= $_GET['s'] ?>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                                <?php
-                            }
-                        }
-                        ?>
-                        <form class="mb-3" method="POST">
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" name="email"
-                                    placeholder="Enter your email" />
-                            </div>
-                            <div class="mb-3 form-password-toggle">
-                                <div class="d-flex justify-content-between">
-                                    <label class="form-label" for="password">Password</label>
-                                    <?php
-                                    if ($settingsManager->getSetting('enable_smtp') == "true") {
-                                        ?>
-                                        <a href="/auth/forgot-password">
-                                            <small>Forgot Password?</small>
-                                        </a>
-                                        <?php
-                                    }
-                                    ?>
-                                </div>
-                                <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" />
-                                    <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
-                                </div>
-                            </div>
-                            <?php
-                            if ($settingsManager->getSetting('enable_turnstile') == "true") {
-                                ?>
-                                <center>
-                                    <div class="cf-turnstile"
-                                        data-sitekey="<?= $settingsManager->getSetting('turnstile_sitekey') ?>"></div>
-                                </center>
-                                &nbsp;
-                                <?php
-                            }
-                            ?>
-                            <?= $csrf->input('login-form'); ?>
-                            <button class="btn btn-primary d-grid w-100" name="submit" type="submit">Login</button>
-                        </form>
-                        <?php
-                        if ($settingsManager->getSetting('registration') == "true") {
-                            ?>
-                            <p class="text-center">
-                                <span>New on our platform?</span>
-                                <a href="/auth/register">
-                                    <span>Create an account</span>
-                                </a>
-                            </p>
-                            <?php
-                        }
-                        ?>
+            [data-bs-theme="dark"] body {
+                background-image: url('/assets/media/auth/bg10-dark.jpeg');
+            }
+        </style>
+        <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+            <div class="d-flex flex-lg-row-fluid">
+                <div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
+                    <img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
+                        src="/assets/media/auth/agency.png" alt="" />
+                    <img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
+                        src="/assets/media/auth/agency-dark.png" alt="" />
+                    <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Fast, Efficient and Productive</h1>
+                    <div class="text-gray-600 fs-base text-center fw-semibold">With the flying power of KosmaPanel you
+                        can host your websites at the fastest speed with our multi node support.
                     </div>
                 </div>
-                <!-- Register Card -->
+            </div>
+            <div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
+                <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10">
+                    <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
+                        <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
+                            <form class="form w-100" method="POST">
+                                <div class="text-center mb-11">
+                                    <h1 class="text-dark fw-bolder mb-3">Sign In</h1>
+                                    <div class="text-gray-500 fw-semibold fs-6">Please sign-in to your account.</div>
+                                </div>
+                                <?php include(__DIR__ . '/../components/alert.php') ?>
+                                <div class="fv-row mb-8">
+                                    <input type="email" placeholder="Email" name="email" autocomplete="off"
+                                        class="form-control bg-transparent" required />
+                                </div>
+                                <div class="fv-row mb-3">
+                                    <input type="password" placeholder="Password" name="password" autocomplete="off"
+                                        class="form-control bg-transparent" required />
+                                </div>
+                                <?php
+                                if ($settingsManager->getSetting('enable_smtp') == "true") {
+                                    ?>
+                                    <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+                                        <div></div>
+                                        <a href="/auth/forgot-password" class="link-primary">Forgot Password ?</a>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                                <?php
+                                if ($settingsManager->getSetting('enable_turnstile') == "true") {
+                                    ?>
+                                    <center>
+                                        <div class="cf-turnstile"
+                                            data-sitekey="<?= $settingsManager->getSetting('turnstile_sitekey') ?>"></div>
+                                    </center>
+                                    &nbsp;
+                                    <?php
+                                }
+                                ?>
+                                <?= $csrf->input('login-form'); ?>
+                                <div class="d-grid mb-10">
+                                    <button type="submit" id="kt_sign_in_submit" name="submit" value="true" class="btn btn-primary">
+                                        <span class="indicator-label">Sign In</span>
+                                        <span class="indicator-progress">Please wait...
+                                            <span
+                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    </button>
+                                </div>
+                                <?php
+                                if ($settingsManager->getSetting('registration') == "true") {
+                                    ?>
+                                    <div class="text-gray-500 text-center fw-semibold fs-6">Not a Member yet?
+                                        <a href="/auth/register" class="link-primary">Sign up</a>
+                                    </div>
+                                <?php } ?>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <?php
-    include(__DIR__ . '/../requirements/footer.php');
-    ?>
-    <script src="/assets/js/pages-auth.js"></script>
-
+    <script>var hostUrl = "/assets/";</script>
+    <script src="/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="/assets/js/scripts.bundle.js"></script>
+    <script src="/assets/js/custom/authentication/sign-in/general.js"></script>
 </body>
 
 </html>
