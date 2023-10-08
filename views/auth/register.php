@@ -42,11 +42,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit'])) {
         if ($csrf->validate('register-form')) {
             $ip_address = $clientip->getclientip();
-            $cf_turnstile_response = $_POST["cf-turnstile-response"];
             $cf_connecting_ip = $ip_address;
             if ($cloudflare_status == "false") {
                 $captcha_success = 1;
             } else {
+                $cf_turnstile_response = $_POST["cf-turnstile-response"];
+                if ($cf_turnstile_response == null) {
+                    header('location: /auth/register?e=Captcha verification failed; please refresh!');
+                    die();
+                }
                 $captcha_success = $captcha->validate_captcha($cf_turnstile_response, $cf_connecting_ip, $cloudflare_secret_key);
             }
             if ($captcha_success) {
@@ -101,13 +105,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         die();
                     } else {
 
-                        if ($smtp_stauts == "true") {
+                        if (!$code == "") {
                             $template = file_get_contents('../views/notifs/verfiy.html');
                             $placeholders = array('%CODE%', '%APP_URL%', '%APP_LOGO%%', '%FIRST_NAME%', '%LAST_NAME%', '%APP_NAME%', '%SMTP_FROM%');
                             $values = array($code, $appURL, $logo, $first_name, $last_name, $name, $settingsManager->getSetting('fromEmail'));
                             $emailContent = str_replace($placeholders, $values, $template);
-
-
                             $mail = new PHPMailer(true);
                             try {
                                 $mail->SMTPDebug = 0;
@@ -132,8 +134,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                         $u_token = $keygen->generate_key($email, $upassword);
                         if ($userDB->createUser($username, $email, $first_name, $last_name, $password, $u_token, $ip_address, $ip_address, $code, $encryption)) {
-                            echo '<script>window.location.href = "' . $appURL . '/auth/login?s=We sent you a verification email. Please check your emails.";</script>';
-                            die();
+                            if ($code == "") {
+                                echo '<script>window.location.href = "' . $appURL . '/auth/login?s=Welcome to ' . $name . '.";</script>';
+                                die();
+                            } else {
+                                echo '<script>window.location.href = "' . $appURL . '/auth/login?s=We sent you a verification email. Please check your emails.";</script>';
+                                die();
+                            }
                         } else {
                             echo '<script>window.location.href = "' . $appURL . '/auth/register?e=We are sorry but we can`t add you in our database due an unexpected error";</script>';
                             die();
@@ -191,10 +198,15 @@ License: For each use you must have a valid license purchased only from above li
             if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
                 themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
             } else {
-                if (localStorage.getItem("data-bs-theme") !== null) { themeMode = localStorage.getItem("data-bs-theme"); }
-                else { themeMode = defaultThemeMode; }
+                if (localStorage.getItem("data-bs-theme") !== null) {
+                    themeMode = localStorage.getItem("data-bs-theme");
+                } else {
+                    themeMode = defaultThemeMode;
+                }
             }
-            if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+            if (themeMode === "system") {
+                themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            }
             document.documentElement.setAttribute("data-bs-theme", themeMode);
         }
     </script>
@@ -225,13 +237,10 @@ License: For each use you must have a valid license purchased only from above li
                 <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10">
                     <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
                         <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
-                            <form class="form w-100" novalidate="novalidate" id="kt_sign_up_form"
-                                data-kt-redirect-url="../../demo43/dist/authentication/layouts/overlay/sign-in.html"
-                                action="#">
+                            <form class="form w-100" method="POST">
                                 <div class="text-center mb-11">
                                     <h1 class="text-dark fw-bolder mb-3">Sign Up</h1>
                                     <div class="text-gray-500 fw-semibold fs-6">Please sign-up for an account.</div>
-
                                 </div>
                                 <?php include(__DIR__ . '/../components/alert.php') ?>
                                 <div class="mb-3">
@@ -292,7 +301,7 @@ License: For each use you must have a valid license purchased only from above li
                                 ?>
                                 <?= $csrf->input('register-form'); ?>
                                 <div class="d-grid mb-10">
-                                    <button type="submit" id="kt_sign_up_submit" class="btn btn-primary">
+                                    <button type="submit" id="kt_sign_up_submit" name="submit" class="btn btn-primary">
                                         <span class="indicator-label">Sign up</span>
                                         <span class="indicator-progress">Please wait...
                                             <span
@@ -308,7 +317,9 @@ License: For each use you must have a valid license purchased only from above li
                 </div>
             </div>
         </div>
-        <script>var hostUrl = "/assets/";</script>
+        <script>
+            var hostUrl = "/assets/";
+        </script>
         <script src="/assets/plugins/global/plugins.bundle.js"></script>
         <script src="/assets/js/scripts.bundle.js"></script>
         <script src="/assets/js/custom/authentication/sign-in/general.js"></script>
