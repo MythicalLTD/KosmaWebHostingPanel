@@ -1,6 +1,6 @@
 <?php
 
-namespace Kosma\Database;
+namespace Kosma;
 
 use Kosma\Database\Connect;
 

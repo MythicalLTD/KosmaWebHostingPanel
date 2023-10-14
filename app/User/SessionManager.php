@@ -1,8 +1,6 @@
 <?php
 
 namespace Kosma\User;
-
-
 use Kosma\Database\Connect;
 use Kosma\Encryption;
 

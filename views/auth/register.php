@@ -4,7 +4,7 @@ $csrf = new Kosma\CSRF();
 use Symfony\Component\Yaml\Yaml;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-use Kosma\Database\SettingsManager;
+use Kosma\SettingsManager;
 use Kosma\Keygen;
 use Kosma\Database\Connect;
 use Kosma\CloudFlare\Captcha;

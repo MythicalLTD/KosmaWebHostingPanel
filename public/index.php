@@ -1,8 +1,4 @@
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 try {
     if (file_exists('../vendor/autoload.php')) {
         require("../vendor/autoload.php");
@@ -13,6 +9,9 @@ try {
 } catch (Exception $e) {
     die('Hello, it looks like our panel does not like some composer packages. Please report this error on our Discord.:  <code>' . $e . '</code>');
 }
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 use Kosma\ErrorHandler;
 
 if (!is_writable(__DIR__)) {

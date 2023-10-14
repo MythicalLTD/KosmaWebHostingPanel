@@ -4,7 +4,7 @@ use Kosma\Client;
 session_start();
 $csrf = new Kosma\CSRF();
 use Symfony\Component\Yaml\Yaml;
-use Kosma\Database\SettingsManager;
+use Kosma\SettingsManager;
 use Kosma\Database\Connect;
 use Kosma\CloudFlare\Captcha;
 use Kosma\Encryption;

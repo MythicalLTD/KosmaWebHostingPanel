@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 session_start();
 $csrf = new Kosma\CSRF();
 use Symfony\Component\Yaml\Yaml;
-use Kosma\Database\SettingsManager;
+use Kosma\SettingsManager;
 use Kosma\Database\User;
 use Kosma\Keygen;
 use Kosma\Database\Connect;

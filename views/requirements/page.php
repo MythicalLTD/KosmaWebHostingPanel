@@ -1,6 +1,6 @@
 <?php 
 use Kosma\User\SessionManager;
-use Kosma\Database\SettingsManager;
+use Kosma\SettingsManager;
 use Kosma\Database\Connect;
 use Kosma\Encryption;
 use Symfony\Component\Yaml\Yaml;
