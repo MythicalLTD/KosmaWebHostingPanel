@@ -5,21 +5,16 @@ session_start();
 $csrf = new Kosma\CSRF();
 use Symfony\Component\Yaml\Yaml;
 use Kosma\Database\SettingsManager;
-use Kosma\Database\User;
-use Kosma\Keygen;
 use Kosma\Database\Connect;
 use Kosma\CloudFlare\Captcha;
 use Kosma\Encryption;
 
 $captcha = new Captcha();
-$userDB = new User();
-$keygen = new Keygen();
-$clientip = new Client();
 $conn = new Connect();
-$conn = $conn->connectToDatabase();
-
 $kosma_encryption = new Encryption();
 $settingsManager = new SettingsManager();
+$conn = $conn->connectToDatabase();
+
 $logo = $settingsManager->getSetting('logo');
 $name = $settingsManager->getSetting('name');
 $cloudflare_secret_key = $settingsManager->getSetting('turnstile_secretkey');

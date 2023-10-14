@@ -3,7 +3,7 @@ namespace Kosma\CloudFlare;
 
 class Captcha
 {
-    function validate_captcha($cf_turnstile_response, $cf_connecting_ip, $cf_secret_key)
+    public function validate_captcha($cf_turnstile_response, $cf_connecting_ip, $cf_secret_key)
     {
         $data = array(
             "secret" => $cf_secret_key,

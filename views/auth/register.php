@@ -1,21 +1,18 @@
 <?php
-use Kosma\Client;
-
 session_start();
 $csrf = new Kosma\CSRF();
 use Symfony\Component\Yaml\Yaml;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Kosma\Database\SettingsManager;
-use Kosma\Database\User;
 use Kosma\Keygen;
 use Kosma\Database\Connect;
 use Kosma\CloudFlare\Captcha;
+use Kosma\User\SessionManager;
 
+$sessionm = new SessionManager();
 $captcha = new Captcha();
-$userDB = new User();
 $keygen = new Keygen();
-$clientip = new Client();
 $conn = new Connect();
 $conn = $conn->connectToDatabase();
 
@@ -41,7 +38,7 @@ $appURL = $prot . '://' . $svhost;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit'])) {
         if ($csrf->validate('register-form')) {
-            $ip_address = $clientip->getclientip();
+            $ip_address = $sessionm->getIP();
             $cf_connecting_ip = $ip_address;
             if ($cloudflare_status == "false") {
                 $captcha_success = 1;
@@ -133,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             }
                         }
                         $u_token = $keygen->generate_key($email, $upassword);
-                        if ($userDB->createUser($username, $email, $first_name, $last_name, $password, $u_token, $ip_address, $ip_address, $code, $encryption)) {
+                        if ($sessionm->createUser($username, $email, $first_name, $last_name, $password, $u_token, $ip_address, $ip_address, $code, $encryption)) {
                             if ($code == "") {
                                 echo '<script>window.location.href = "' . $appURL . '/auth/login?s=Welcome to ' . $name . '.";</script>';
                                 die();

@@ -27,21 +27,7 @@
                 </p>
                 <div class="code-box" data-simplebar>
                     <code class="cline">
-                    <?php
-                    if (isset($_GET['e'])) {
-                        http_response_code(500); 
-                        $error = htmlspecialchars($_GET['e']);
-                        $errorLines = explode(PHP_EOL, $error);
-                        foreach ($errorLines as $line) {
-                            $trimmedLine = ltrim($line);
-                            if (!empty($trimmedLine)) {
-                                echo $trimmedLine . PHP_EOL;
-                            }
-                        }
-                    } else {
-                        echo 'No error';
-                    }
-                    ?>
+                    This is a template
                 </code>
                 </div>
                 <p class="error-text">

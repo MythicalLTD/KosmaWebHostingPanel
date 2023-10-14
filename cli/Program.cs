@@ -187,19 +187,19 @@ namespace KosmaPanel
             }
             else if (args.Contains("-help")) {
                 Console.Clear();
-                Console.WriteLine("---------------------------------------------KosmaPanel CLI--------------------------------------------------");
-                Console.WriteLine("|                                                                                                           |");
-                Console.WriteLine("|    -help | Opens a help menu with the available commands.                                                 |");
-                Console.WriteLine("|    -generate-config | Generate a new config file for KosmaPanel.                                          |");
-                Console.WriteLine("|    -delete-config | Delete the config file for KosmaPanel.                                                |");
-                Console.WriteLine("|    -key-generate | Generate a new encryption key for KosmaPanel.                                          |");
-                Console.WriteLine("|    -enable-debug | Enables the debug mode to display error messages for KosmaPanel.                       |");
-                Console.WriteLine("|    -disable-debug | Disables the debug mode to hide error messages for KosmaPanel.                        |");
-                Console.WriteLine("|    -config-database | Add the database connection to your config file.                                    |");
-                Console.WriteLine("|    -migrate-database-now | Create and setup all tables in the database                                    |");
-                Console.WriteLine("|    -version | See the version / build version of the CLI.                                                 |");
-                Console.WriteLine("|                                                                                                           |");
-                Console.WriteLine("-------------------------------------------------------------------------------------------------------------");                
+                Console.WriteLine("╔≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡⊳ KosmaPanel CLI ⊲≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡╗");
+                Console.WriteLine("‖                                                                                                          ‖");
+                Console.WriteLine("‖    -help | Opens a help menu with the available commands.                                                ‖");
+                Console.WriteLine("‖    -generate-config | Generate a new config file for KosmaPanel.                                         ‖");
+                Console.WriteLine("‖    -delete-config | Delete the config file for KosmaPanel.                                               ‖");
+                Console.WriteLine("‖    -key-generate | Generate a new encryption key for KosmaPanel.                                         ‖");
+                Console.WriteLine("‖    -enable-debug | Enables the debug mode to display error messages for KosmaPanel.                      ‖");
+                Console.WriteLine("‖    -disable-debug | Disables the debug mode to hide error messages for KosmaPanel.                       ‖");
+                Console.WriteLine("‖    -config-database | Add the database connection to your config file.                                   ‖");
+                Console.WriteLine("‖    -migrate-database-now | Create and setup all tables in the database                                   ‖");
+                Console.WriteLine("‖    -version | See the version / build version of the CLI.                                                ‖");
+                Console.WriteLine("‖                                                                                                          ‖");
+                Console.WriteLine("╚≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡⊳ Copyright 2023 MythicalSystems ⊲≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡╝");                
                 Environment.Exit(0x0);
             }
             else if (args.Length > 0)

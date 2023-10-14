@@ -4,16 +4,19 @@ namespace Kosma\User;
 
 
 use Kosma\Database\Connect;
+use Kosma\Encryption;
 
+$encryption = new Encryption();
 class SessionManager
 {
     private $dbConnection;
-
+    private $encryption; 
     public function __construct()
     {
         // Initialize the database connection
         $dbConnector = new Connect();
         $this->dbConnection = $dbConnector->connectToDatabase();
+        $this->encryption = new Encryption(); 
     }
 
     public function authenticateUser()
@@ -70,7 +73,63 @@ class SessionManager
             }
         }
     }
+    public function createUser($username, $email, $first_name, $last_name, $password, $u_token, $first_ip, $last_ip, $verification_code, $ekey)
+    {
+        $query = "INSERT INTO users (username, email, first_name, last_name, password, usertoken, first_ip, last_ip, verification_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $this->dbConnection->prepare($query);
+        $encryptedUsername = $this->encryption->encrypt($username, $ekey);
+        $encryptedFirstName = $this->encryption->encrypt($first_name, $ekey);
+        $encryptedLastName = $this->encryption->encrypt($last_name, $ekey);
+        $encryptedIpAddress = $this->encryption->encrypt($first_ip, $ekey);
+        $stmt->bind_param(
+            "sssssssss",
+            $encryptedUsername,
+            $email,
+            $encryptedFirstName,
+            $encryptedLastName,
+            $password,
+            $u_token,
+            $encryptedIpAddress,
+            $encryptedIpAddress,
+            $verification_code
+        );
+        return $stmt->execute();
+    }
 
+    public function resetPassword($email, $userkey, $resetcode, $ipv4)
+    {
+        $query = "INSERT INTO `resetpasswords` (`email`, `user-apikey`, `user-resetkeycode`, `ip_addres`) VALUES (?, ?, ?, ?)";
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->bind_param(
+            "ssss",
+            $email,
+            $userkey,
+            $resetcode,
+            $ipv4,
+        );
+        return $stmt->execute();
+    }
+
+    public function getIP()
+    {
+        if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+            $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+            $_SERVER['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+        }
+        $client = @$_SERVER['HTTP_CLIENT_IP'];
+        $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+        $remote = $_SERVER['REMOTE_ADDR'];
+
+        if (filter_var($client, FILTER_VALIDATE_IP)) {
+            $ip = $client;
+        } elseif (filter_var($forward, FILTER_VALIDATE_IP)) {
+            $ip = $forward;
+        } else {
+            $ip = $remote;
+        }
+
+        return $ip;
+    }
     private function getFullUrl()
     {
         $fullUrl = "http";

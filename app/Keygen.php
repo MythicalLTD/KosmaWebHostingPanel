@@ -35,7 +35,5 @@ class Keygen {
         $key = "mythicalsystems_" . base64_encode($formatted_timestamp . $generated_password);
         return $key;
     }
-
 }
-
 ?>

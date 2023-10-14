@@ -9,7 +9,7 @@ $router->add('/kosmapanel/templates/emails/verify', function () {
 });
 
 $router->add('/errors/critical', function () {
-    require("../templates/errors/critical.php");
+    require("../templates/errors/critical.html");
 });
 
 $router->add('/errors/404', function () {

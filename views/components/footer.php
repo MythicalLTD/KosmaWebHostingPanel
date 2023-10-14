@@ -9,7 +9,7 @@
   </div>
   <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
     <li class="menu-item">
-      <a href="https://mythicaldocs.pages.dev" target="_blank" class="menu-link px-2">Documentation</a>
+      <a href="https://docs.mythicalsystems.me" target="_blank" class="menu-link px-2">Documentation</a>
     </li>
     <li class="menu-item">
       <a href="https://discord.gg/P65Ehaez8u" target="_blank" class="menu-link px-2">Support</a>

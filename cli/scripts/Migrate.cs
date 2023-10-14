@@ -1,20 +1,13 @@
 using MySqlConnector;
 using YamlDotNet.Serialization;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace KosmaPanel
 {
     public class Migrate
     {
         FileManager fm = new FileManager();
-#pragma warning disable
-        public static string connectionString;
-#pragma warning restore
-
+        public static string? connectionString;
         private const string MigrationConfigFilePath = "migrates.ini";
-
         public void Now()
         {
             if (fm.MFolderExists())
@@ -36,9 +29,9 @@ namespace KosmaPanel
 
                 var deserializer = new DeserializerBuilder().Build();
                 var yamlObject = deserializer.Deserialize(new StringReader(yamlContent));
-#pragma warning disable
+                #pragma warning disable
                 var databaseSettings = (yamlObject as dynamic)["database"];
-#pragma warning restore
+                #pragma warning restore
                 string dbHost = databaseSettings["host"];
                 string dbPort = databaseSettings["port"];
                 string dbUsername = databaseSettings["username"];
