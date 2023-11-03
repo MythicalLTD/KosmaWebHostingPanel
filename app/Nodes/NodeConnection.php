@@ -23,7 +23,7 @@ class NodeConnection
             $options = [
                 'headers' => $headers,
             ];
-            $response = $this->client->post($host . '/system/info', $options);
+            $response = $this->client->get($host . '/system/info', $options);
 
             $statusCode = $response->getStatusCode();
             if ($statusCode == 200) {
@@ -49,7 +49,7 @@ class NodeConnection
             $options = [
                 'headers' => $headers,
             ];
-            $response = $this->client->post($host . '/system/info', $options);
+            $response = $this->client->get($host . '/system/info', $options);
 
             $statusCode = $response->getStatusCode();
             if ($statusCode == 200) {
@@ -72,8 +72,54 @@ class NodeConnection
         $options = [
             'headers' => $headers,
         ];
-        $response = $this->client->post($host . '/system/info', $options);
+        $response = $this->client->get($host . '/system/info', $options);
 
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode == 200) {
+            return 'online';
+        } else if ($statusCode == 503) {
+            return 'The node is offline';
+        } else if ($statusCode == 401) {
+            return 'Server token mismatch: please check if this is the right server token to authenticate with the node and panel';
+        } else {
+            return $statusCode;
+        }
+
+    }
+    public function ShutDownNode($host, $token)
+    {
+        $headers = [
+            'Authorization' => $token,
+            'Content-Type' => 'application/json',
+        ];
+        $options = [
+            'headers' => $headers,
+        ];
+        $response = $this->client->post($host . '/system/shutdown', $options);
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode == 200) {
+            return 'online';
+        } else if ($statusCode == 503) {
+            return 'The node is offline';
+        } else if ($statusCode == 401) {
+            return 'Server token mismatch: please check if this is the right server token to authenticate with the node and panel';
+        } else {
+            return $statusCode;
+        }
+
+    }
+    public function RebootNode($host, $token)
+    {
+        $headers = [
+            'Authorization' => $token,
+            'Content-Type' => 'application/json',
+        ];
+        $options = [
+            'headers' => $headers,
+        ];
+        $response = $this->client->post($host . '/system/reboot', $options);
 
         $statusCode = $response->getStatusCode();
         if ($statusCode == 200) {
