@@ -8,7 +8,9 @@ use Kosma\SettingsManager;
 use Kosma\Database\Connect;
 use Kosma\CloudFlare\Captcha;
 use Kosma\Encryption;
+use Kosma\User\SessionManager;
 
+$sessionm = new SessionManager();
 $captcha = new Captcha();
 $conn = new Connect();
 $kosma_encryption = new Encryption();
@@ -31,7 +33,7 @@ $appURL = $prot . '://' . $svhost;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit'])) {
         if ($csrf->validate('login-form')) {
-            $ip_address = $clientip->getclientip();
+            $ip_address = $sessionm->getIP();
             $cf_turnstile_response = $_POST["cf-turnstile-response"];
             $cf_connecting_ip = $ip_address;
             if ($cloudflare_status == "false") {
